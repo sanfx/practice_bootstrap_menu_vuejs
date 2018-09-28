@@ -57,7 +57,7 @@
 			<div id="navBarContainer" class='navbar navbar-expand-lg navbar-light bg-light'>
 			<ul class="nav navbar-nav">
 				<li class="nav-link active" :class="{active: menuItem.isActive }" v-for="menuItem in navItemsArray" >
-				 <a href="#">{{ menuItem.name }}</a>
+				 <a href="#" @click="selectTabItem(menuItem)">{{ menuItem.name }}</a>
 				 </li>
 			</ul>
 			</div>
@@ -67,7 +67,7 @@
 		</div>
 	</script>
 	<script type="x-template", id="template-tab">
-		<div>
+		<div id="individualTabContentContainer" v-show="isActive">
 		<slot></slot>
 		</div>
 	</script>
@@ -81,6 +81,13 @@
 			},
 			mounted() {
 				this.navItemsArray = this.$children
+			},
+			methods: {
+				selectTabItem(passedAlongMenuItemObject){
+					this.navItemsArray.foreach(navItem => {
+						navItem.isActive = (passedAlongMenuItemObject == navItem)
+					})
+				}
 			}
 		})
 
