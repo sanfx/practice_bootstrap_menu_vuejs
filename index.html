@@ -8,6 +8,7 @@
 	<!-- Jquery CDN-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- Bootstrap CDN -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
@@ -22,7 +23,7 @@
 		<div id="app">
 
 			<tabs>
-				<tab name="Tab One">
+				<tab name="Tab One" :selected="true">
 					<h1>Composer is Great</h1>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -53,9 +54,11 @@
 	</div>
 	<script type="x-template" id="template-tabs">
 		<div id="applicationContainer"> 
-			<div id="navBarContainer">
-			<ul>
-				<li v-for="menuItem in navItemsArray" > <a href="">{{ menuItem.name }}</a></li>
+			<div id="navBarContainer" class='navbar navbar-expand-lg navbar-light bg-light'>
+			<ul class="nav navbar-nav">
+				<li class="nav-link active" :class="{active: menuItem.isActive }" v-for="menuItem in navItemsArray" >
+				 <a href="#">{{ menuItem.name }}</a>
+				 </li>
 			</ul>
 			</div>
 			<div id="tabContentContainer">
@@ -84,7 +87,16 @@
 		Vue.component('tab', {
 			template: '#template-tab',
 			props:{
-				name: {required: true}
+				name: {required: true },
+				selected: {default: false }
+			},
+			data() {
+				return {
+					isActive: false
+				}
+			},
+			mounted() {
+				this.isActive = this.selected
 			}
 		})
 		new Vue({
