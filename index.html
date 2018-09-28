@@ -22,7 +22,7 @@
 		<div id="app">
 
 			<tabs>
-				<tab>
+				<tab name="Tab One">
 					<h1>Composer is Great</h1>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -31,20 +31,20 @@
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				</tab>
-				<tab>
+				<tab name="Tab San">
 					<h1>Vagarant is awesome.</h1>
 					<p> Duis aute irure dolor in reprehenderit in voluptate velit esse
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				</tab>
-				<tab>
+				<tab name="Tab Nitin">
 					<h1>Docker is great.</h1>
 					<p>
 						ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 					consequat. Duis aute irure </p>
 				</tab>
-				<tab>
+				<tab name="Tab Krysto">
 					<h1>What is Vue.js?</h1>
 					<p>sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
 				</tab>
@@ -54,20 +54,38 @@
 	<script type="x-template" id="template-tabs">
 		<div id="applicationContainer"> 
 			<div id="navBarContainer">
-			Navigation menu goes here.
+			<ul>
+				<li v-for="menuItem in navItemsArray" > <a href="">{{ menuItem.name }}</a></li>
+			</ul>
 			</div>
-
 			<div id="tabContentContainer">
-			Tab Content goes here.
-			<slot>
-			</slot>
+				<slot></slot>
 			</div>
-		
+		</div>
+	</script>
+	<script type="x-template", id="template-tab">
+		<div>
+		<slot></slot>
 		</div>
 	</script>
 	<script>
 		Vue.component('tabs',{
-			template: '#template-tabs'
+			template: '#template-tabs',
+			data(){
+				return {
+					navItemsArray: []
+				}
+			},
+			mounted() {
+				this.navItemsArray = this.$children
+			}
+		})
+
+		Vue.component('tab', {
+			template: '#template-tab',
+			props:{
+				name: {required: true}
+			}
 		})
 		new Vue({
 			el: '#app'
